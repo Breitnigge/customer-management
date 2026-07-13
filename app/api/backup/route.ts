@@ -1,20 +1,25 @@
-export const dynamic = "force-dynamic";
+export const runtime = "edge";
 import { NextResponse } from "next/server";
-import fs from "fs";
-import { DB_PATH } from "@/lib/db";
+import { getDB } from "@/lib/d1";
 
 export async function GET() {
-  if (!fs.existsSync(DB_PATH)) {
-    return NextResponse.json(
-      { error: "DBファイルが見つかりません" },
-      { status: 500 }
-    );
-  }
-  const fileBuffer = fs.readFileSync(DB_PATH);
-  return new NextResponse(fileBuffer, {
+  const db = getDB();
+  const { results: customers } = await db
+    .prepare("SELECT * FROM customers ORDER BY id")
+    .all();
+  const { results: histories } = await db
+    .prepare("SELECT * FROM purchase_histories ORDER BY id")
+    .all();
+  const data = {
+    customers,
+    histories,
+    exported_at: new Date().toISOString(),
+  };
+  const today = new Date().toISOString().slice(0, 10);
+  return new NextResponse(JSON.stringify(data, null, 2), {
     headers: {
-      "Content-Type": "application/octet-stream",
-      "Content-Disposition": `attachment; filename="customers_backup.db"`,
+      "Content-Type": "application/json",
+      "Content-Disposition": `attachment; filename="backup-${today}.json"`,
     },
   });
 }
