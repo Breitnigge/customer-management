@@ -17,7 +17,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 
 export async function POST(request: NextRequest, { params }: Params) {
   const db = getDB();
-  const body = await request.json();
+  const body = await request.json() as { purchase_date?: string; product_name?: string; amount?: number; memo?: string };
   const { purchase_date, product_name, amount = 0, memo = "" } = body;
   if (!product_name?.trim()) {
     return NextResponse.json({ error: "商品名は必須です" }, { status: 400 });

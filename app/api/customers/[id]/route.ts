@@ -17,7 +17,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
 
 export async function PUT(request: NextRequest, { params }: Params) {
   const db = getDB();
-  const body = await request.json();
+  const body = await request.json() as { name?: string; phone?: string; email?: string; memo?: string };
   const { name, phone = "", email = "", memo = "" } = body;
   if (!name?.trim()) {
     return NextResponse.json({ error: "名前は必須です" }, { status: 400 });
