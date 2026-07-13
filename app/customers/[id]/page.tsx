@@ -47,14 +47,14 @@ export default function CustomerDetailPage() {
   const fetchCustomer = useCallback(async () => {
     const res = await fetch(`/api/customers/${id}`);
     if (!res.ok) { router.push("/"); return; }
-    const data = await res.json();
+    const data = await res.json() as Customer;
     setCustomer(data);
     setForm({ name: data.name, phone: data.phone, email: data.email, memo: data.memo });
   }, [id, router]);
 
   const fetchHistories = useCallback(async () => {
     const res = await fetch(`/api/customers/${id}/histories`);
-    setHistories(await res.json());
+    setHistories(await res.json() as History[]);
   }, [id]);
 
   useEffect(() => {

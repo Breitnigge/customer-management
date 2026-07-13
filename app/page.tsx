@@ -21,7 +21,7 @@ export default function HomePage() {
   const fetchCustomers = useCallback(async (q: string) => {
     setLoading(true);
     const res = await fetch(`/api/customers?q=${encodeURIComponent(q)}`);
-    const data = await res.json();
+    const data = await res.json() as Customer[];
     setCustomers(data);
     setLoading(false);
   }, []);
