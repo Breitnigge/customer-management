@@ -7,4 +7,4 @@ pages_build_output_dir = ".vercel/output/static"
 [[d1_databases]]
 binding = "DB"
 database_name = "customer-management-db"
-database_id = "placeholder"
+database_id = "dbb27970-92e6-48d2-9ebb-3805976f9224"
