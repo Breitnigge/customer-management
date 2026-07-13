@@ -76,7 +76,7 @@ export default function CustomerDetailPage() {
       setEditing(false);
       setFormError("");
     } else {
-      const data = await res.json();
+      const data = await res.json() as { error?: string };
       setFormError(data.error || "更新に失敗しました");
     }
     setSaving(false);
@@ -104,7 +104,7 @@ export default function CustomerDetailPage() {
       setHistError("");
       setShowHistForm(false);
     } else {
-      const data = await res.json();
+      const data = await res.json() as { error?: string };
       setHistError(data.error || "登録に失敗しました");
     }
     setAddingHist(false);

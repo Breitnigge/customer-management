@@ -28,10 +28,10 @@ export default function NewCustomerPage() {
       body: JSON.stringify(form),
     });
     if (res.ok) {
-      const data = await res.json();
+      const data = await res.json() as { id: number };
       router.push(`/customers/${data.id}`);
     } else {
-      const data = await res.json();
+      const data = await res.json() as { error?: string };
       setError(data.error || "登録に失敗しました");
       setSaving(false);
     }
